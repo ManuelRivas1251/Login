@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3001
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
@@ -19,7 +19,7 @@ app.get('/GetUser', function (req, res) {
     var config = {
         user: 'sa',
         password: 'Virtualizacion1.',
-        server: 'database-1.calagsqqt5ca.us-east-1.rds.amazonaws.com', 
+        server: 'virtualizacion.c1eb1afnit5h.us-east-2.rds.amazonaws.com', 
         database: 'Virtualizacion' 
     };
 
@@ -35,7 +35,7 @@ app.get('/GetUser', function (req, res) {
         var EmailHeader = req.header('Email');
         
         // query to the database and get the records
-        var query = 'select Email,Password from USERS where Email = \''+EmailHeader+ '\' AND Password = \''+PasswordHeader+'\'; ';
+        var query = 'select Usuario,Email,Password from USERS where Usuario = \''+EmailHeader+ '\' AND Password = \''+PasswordHeader+'\'; ';
         request.query(query, function (err, recordset) {
             
             if (err) console.log(err)
@@ -58,7 +58,7 @@ app.post('/PostUser', function (req, res) {
     var config = {
         user: 'sa',
         password: 'Virtualizacion1.',
-        server: 'database-1.calagsqqt5ca.us-east-1.rds.amazonaws.com', 
+        server: 'virtualizacion.c1eb1afnit5h.us-east-2.rds.amazonaws.com', 
         database: 'Virtualizacion' 
     };
 
@@ -69,13 +69,14 @@ app.post('/PostUser', function (req, res) {
 
         // create Request object
         var request = new sql.Request();
+		var UsuarioHeader = req.header('Usuario');
         var PasswordHeader = req.header('Password');
         var EmailHeader = req.header('Email');
         var Nombre = req.header('Nombre');
         var Apellido = req.header('Apellido');
         var FechaNacimiento = req.header('FechaNacimiento');
         // query to the database and get the records
-        var query = 'INSERT INTO USERS(Email,Nombre,Apellido,Password,FechaNacimiento) VALUES (\''+EmailHeader+'\',\''+
+        var query = 'INSERT INTO USERS(Usuario,Email,Nombre,Apellido,Password,FechaNacimiento) VALUES (\''+UsuarioHeader+'\',\''+EmailHeader+'\',\''+
         Nombre+'\',\''+Apellido+'\',\''+PasswordHeader+'\',\''+FechaNacimiento+'\');';
 
         request.query(query, function (err, recordset) {
